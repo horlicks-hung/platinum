@@ -8,8 +8,8 @@ import com.platinumwill.entity.jpa.TreeItem;
 
 @Component
 public class TreeDaoImpl extends AbstractDao implements TreeDao {
-	public void doSomething() {
+	public void persist(TreeItem treeItem) {
 		Session session = this.getSessionFactory().getCurrentSession();
-		session.get(TreeItem.class, "");
+		session.persist(treeItem);
 	}
 }
