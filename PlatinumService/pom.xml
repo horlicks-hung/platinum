@@ -6,6 +6,17 @@
   
 	<dependencies>
 		<dependency>
+			<groupId>com.platinumwill</groupId>
+			<artifactId>PlatinumDao</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.platinumwill</groupId>
+			<artifactId>PlatinumBeans</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
 			<version>2.6</version>
