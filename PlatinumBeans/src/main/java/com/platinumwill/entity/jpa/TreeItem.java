@@ -27,7 +27,15 @@ public class TreeItem {
 		this.id = id;
 	}
 	
-	
+	private String name;
+	@Column(name = "ITEM_NAME", nullable = true)
+	public String getName() {
+		return this.name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	private TreeItem parent;
 	@ManyToOne()
 	@JoinColumn(name = "PARENT_ID", nullable = true, insertable = false, updatable = false)
@@ -45,6 +53,14 @@ public class TreeItem {
 	}
 	public void setChildren(List<TreeItem> children) {
 		this.children = children;
+	}
+	
+	public TreeItem() {
+		
+	}
+	
+	public TreeItem(String name) {
+		this.setName(name);
 	}
 	
 }
