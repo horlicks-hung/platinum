@@ -11,6 +11,13 @@
 			<version>2.6</version>
 		</dependency>
 
+		<!-- hibernate -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>4.2.6.Final</version>
+		</dependency>
+		
 		<!-- spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
