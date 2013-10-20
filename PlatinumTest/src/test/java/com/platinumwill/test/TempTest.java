@@ -16,7 +16,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.platinumwill.service.TreeService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "/test-beans.xml", "/beans.xml" })
+//@ContextConfiguration(locations = { "/test-beans.xml", "/beans.xml" })
+@ContextConfiguration(locations = { "/test-beans.xml" })
 public class TempTest {
 	private static Logger LOGGER = LoggerFactory.getLogger(TempTest.class);
 	public static Logger getLogger() {
