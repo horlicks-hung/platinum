@@ -17,46 +17,48 @@
 	">
 	
 	<context:annotation-config />
-<!-- 	<context:component-scan base-package="com.zurich.sds.service.sample.spring" /> -->
+	<context:component-scan base-package="com.platinumwill.dao" />
+	<context:component-scan base-package="com.platinumwill.service" />
 
 	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
 
-<!-- 	<aop:config> -->
-<!-- 		<aop:pointcut id="testQuery" -->
-<!-- 			expression="execution(* com.platinumwill.test..*.test*(..))" /> -->
-<!-- 		<aop:advisor advice-ref="hibernateTxAdvice" pointcut-ref="testQuery" /> -->
-<!-- 	</aop:config> -->
-<!-- 	<tx:advice id="hibernateTxAdvice" transaction-manager="hibernateTransactionManager"> -->
-<!-- 		<tx:attributes> -->
-<!-- 			<tx:method name="*" propagation="REQUIRED" />這一行設定要控制的 method 和交易控制方式 -->
-<!-- 		</tx:attributes> -->
-<!-- 	</tx:advice> -->
+	<aop:config>
+		<aop:pointcut id="testQuery"
+			expression="execution(* com.platinumwill.test..*.test*(..))" />
+		<aop:advisor advice-ref="hibernateTxAdvice" pointcut-ref="testQuery" />
+	</aop:config>
+	<tx:advice id="hibernateTxAdvice" transaction-manager="hibernateTransactionManager">
+		<tx:attributes>
+			<!-- 這一行設定要控制的 method 和交易控制方式 -->
+			<tx:method name="*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
 
-<!-- 	<bean id="hibernateTransactionManager" -->
-<!-- 		class="org.springframework.orm.hibernate4.HibernateTransactionManager"> -->
-<!-- 		<property name="sessionFactory" ref="sessionFactory" /> -->
-<!-- 	</bean> -->
-<!-- 	<bean id="sessionFactory" -->
-<!-- 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"> -->
-<!-- 		<property name="dataSource" ref="dataSource" /> -->
-<!-- 		<property name="hibernateProperties"> -->
-<!-- 			<props> -->
-<!-- 				<prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop> -->
-<!-- 				<prop key="hibernate.show_sql">true</prop> -->
-<!-- 			</props> -->
-<!-- 		</property> -->
-<!-- 		<property name="annotatedClasses"> -->
-<!-- 			<list> -->
-<!-- 				<value>com.platinumwill.entity.TreeItem</value> -->
-<!-- 			</list> -->
-<!-- 		</property> -->
-<!-- 	</bean> -->
-<!-- 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" -->
-<!-- 		destroy-method="close"> -->
-<!-- 		<property name="driverClassName" value="net.sourceforge.jtds.jdbc.Driver" /> -->
-<!-- 		<property name="url" value="jdbc:jtds:sqlserver://chaogun-dev.ckqpdk8pkcpu.us-west-2.rds.amazonaws.com:1433/POC" /> -->
-<!-- 		<property name="username" value="chaogun_dev" /> -->
-<!-- 		<property name="password" value="1qazxcde4" /> -->
-<!-- 	</bean> -->
+	<bean id="hibernateTransactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+		<property name="annotatedClasses">
+			<list>
+				<value>com.platinumwill.entity.jpa.TreeItem</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="net.sourceforge.jtds.jdbc.Driver" />
+		<property name="url" value="jdbc:jtds:sqlserver://chaogun-dev.ckqpdk8pkcpu.us-west-2.rds.amazonaws.com:1433/POC" />
+		<property name="username" value="chaogun_dev" />
+		<property name="password" value="1qazxcde4" />
+	</bean>
 
 </beans>
