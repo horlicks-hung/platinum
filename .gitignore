@@ -2,3 +2,7 @@
 /PlatinumTest/target
 /PlatinumService/target
 /PlatinumDao/target
+
+.classpath
+.project
+.settings
