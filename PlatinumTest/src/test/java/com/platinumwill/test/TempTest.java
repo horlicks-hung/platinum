@@ -36,6 +36,7 @@ public class TempTest {
 	@Test
 	public void test() {
 		LOGGER.debug("test message");
+		this.treeService.mockService();
 	}
 	
 }
