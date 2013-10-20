@@ -1,4 +1,4 @@
-package com.platinumwill.dao.hibernate;
+package com.platinumwill.dao.impl.hibernate;
 
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;

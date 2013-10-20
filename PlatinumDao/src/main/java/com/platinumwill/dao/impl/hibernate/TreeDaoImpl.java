@@ -1,4 +1,4 @@
-package com.platinumwill.dao.hibernate;
+package com.platinumwill.dao.impl.hibernate;
 
 import org.hibernate.Session;
 import org.springframework.stereotype.Component;
