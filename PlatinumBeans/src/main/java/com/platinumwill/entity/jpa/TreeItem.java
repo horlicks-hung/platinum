@@ -1,12 +1,9 @@
 package com.platinumwill.entity.jpa;
 
-import java.util.LinkedList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,9 +37,8 @@ public class TreeItem {
 	}
 
 	private TreeItem parent;
-//	@ManyToOne(cascade = CascadeType.ALL)
-	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-	@JoinColumn(name = "PARENT_ID", nullable = true, insertable = false, updatable = true)
+	@ManyToOne()
+	@JoinColumn(name = "PARENT_ID", nullable = true, insertable = true, updatable = true)
 	public TreeItem getParent() {
 		return this.parent;
 	}
@@ -50,8 +46,8 @@ public class TreeItem {
 		this.parent = parent;
 	}
 	
-	private List<TreeItem> children = new LinkedList<TreeItem>();
-	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<TreeItem> children;
+	@OneToMany(mappedBy = "parent")
 	public List<TreeItem> getChildren() {
 		return this.children;
 	}
