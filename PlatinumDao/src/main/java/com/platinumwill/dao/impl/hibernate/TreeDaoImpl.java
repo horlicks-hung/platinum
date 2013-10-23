@@ -12,4 +12,11 @@ public class TreeDaoImpl extends AbstractDao implements TreeDao {
 		Session session = this.getSessionFactory().getCurrentSession();
 		session.persist(treeItem);
 	}
+	
+	public TreeItem find(int id) {
+		Session session = this.getSessionFactory().getCurrentSession();
+		TreeItem result = (TreeItem) session.get(TreeItem.class, id);
+		return result;
+	}
+	
 }
