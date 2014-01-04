@@ -2,6 +2,7 @@
 /PlatinumTest/target
 /PlatinumService/target
 /PlatinumDao/target
+/PlatinumUtils/target
 /SeleniumAgent/target
 
 .classpath
