@@ -43,7 +43,6 @@ public abstract class AbstractDaoImpl {
 			if (isCollection) {
 				if (!ignorePropertyList.contains(propertyName)) {
 					ignorePropertyList.add(propertyName);
-					continue;
 				}
 				if (ignoreCollection) {
 					continue;
