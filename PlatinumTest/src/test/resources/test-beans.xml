@@ -67,6 +67,10 @@
 		<property name="url" value="jdbc:jtds:sqlserver://chaogun-dev.ckqpdk8pkcpu.us-west-2.rds.amazonaws.com:1433/POC" />
 		<property name="username" value="chaogun_dev" />
 		<property name="password" value="1qazxcde4" />
+<!-- 		<property name="driverClassName" value="${db.driverClassName}" /> -->
+<!-- 		<property name="url" value="${db.url}" /> -->
+<!-- 		<property name="username" value="${db.username}" /> -->
+<!-- 		<property name="password" value="${db.password}" /> -->
 	</bean>
 
 </beans>

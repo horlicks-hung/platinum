@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/task
+	http://www.springframework.org/schema/task/spring-task-3.0.xsd
+	">
+
+	<context:annotation-config />
+	<context:component-scan base-package="com.zurich.sds.service.backend.test.copy" />
+
+	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
+	
+	<aop:config>
+		<aop:pointcut id="testQuery" expression="execution(* com.zurich..*.*(..))" />
+		<aop:advisor advice-ref="sourceHibernateTxAdvice" pointcut-ref="testQuery" />
+		<aop:advisor advice-ref="targetHibernateTxAdvice" pointcut-ref="testQuery" />
+	</aop:config>
+	
+	<tx:advice id="sourceHibernateTxAdvice" transaction-manager="sourceHibernateTransactionManager">
+		<tx:attributes>
+			<tx:method name="*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+	<bean id="sourceHibernateTransactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sourceSessionFactory" />
+	</bean>
+	<bean id="sourceSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="hsqlBackupDataSource" /><!-- source data source is here -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
+<!-- 				<prop key="hibernate.show_sql">true</prop> -->
+			</props>
+		</property>
+		<property name="packagesToScan">
+			<list>
+				<value>com.zurich.sds.model.backend</value>
+				<value>com.zurich.sds.model.gtl.hibernate</value>
+			</list>
+		</property>
+	</bean>
+
+	<tx:advice id="targetHibernateTxAdvice" transaction-manager="targetHibernateTransactionManager">
+		<tx:attributes>
+			<tx:method name="*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+	<bean id="targetHibernateTransactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="targetSessionFactory" />
+	</bean>
+	<bean id="targetSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="hsqlDataSource" /><!-- target data source is here -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
+<!-- 				<prop key="hibernate.show_sql">true</prop> -->
+			</props>
+		</property>
+		<property name="packagesToScan">
+			<list>
+				<value>com.zurich.sds.model.backend</value>
+				<value>com.zurich.sds.model.gtl.hibernate</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="amazonDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="net.sourceforge.jtds.jdbc.Driver" />
+		<property name="url" value="jdbc:jtds:sqlserver://chaogun-dev.ckqpdk8pkcpu.us-west-2.rds.amazonaws.com:1433/SDS" />
+		<property name="username" value="chaogun_dev" />
+		<property name="password" value="1qazxcde4" />
+	</bean>
+
+	<bean id="hsqlDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="org.hsqldb.jdbc.JDBCDriver" />
+		<property name="url" value="jdbc:hsqldb:hsql://127.0.0.1:9001/sdsbackenddb" />
+		<property name="username" value="SA" />
+		<property name="password" value="" />
+	</bean>
+	<bean id="hsqlBackupDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="org.hsqldb.jdbc.JDBCDriver" />
+		<property name="url" value="jdbc:hsqldb:hsql://127.0.0.1:9001/sdsbackendbackupdb" />
+		<property name="username" value="SA" />
+		<property name="password" value="" />
+	</bean>
+
+	<bean id="zurichDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="net.sourceforge.jtds.jdbc.Driver" />
+		<property name="url" value="jdbc:jtds:sqlserver://192.168.128.20:1433/ZWebDB_Trial" />
+		<property name="username" value="webuser" />
+		<property name="password" value="webuserpwd" />
+	</bean>
+
+</beans>
