@@ -2,6 +2,7 @@ package com.platinum.test.selenium;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -22,7 +23,7 @@ public class SeleniumAgent {
 	}
 	
 	public void 選下拉(By 怎麼找到選項, String 選項字串) {
-		ExpectedCondition<Boolean> 選項已經載入 = ExpectedConditions.textToBePresentInElement(怎麼找到選項, 選項字串);
+		ExpectedCondition<Boolean> 選項已經載入 = ExpectedConditions.textToBePresentInElementLocated(怎麼找到選項, 選項字串);
 		new WebDriverWait(driver, 50).until(選項已經載入);
 		Select 下拉 = new Select(driver.findElement(怎麼找到選項));
 		下拉.selectByVisibleText(選項字串);
@@ -38,11 +39,12 @@ public class SeleniumAgent {
 	public void 按(By 怎麼找到元件) {
 		ExpectedCondition<WebElement> 選項可以按下去 = ExpectedConditions.elementToBeClickable(怎麼找到元件);
 		WebElement element = new WebDriverWait(driver, 30).until(選項可以按下去);
-		element.click();
+//		element.click();
+		element.sendKeys(Keys.RETURN);
 	}
 	
 	public void 選下拉BY選項VALUE(By 怎麼找到選項, String value字串) {
-		ExpectedCondition<Boolean> 選項已經載入 = ExpectedConditions.textToBePresentInElement(怎麼找到選項, value字串);
+		ExpectedCondition<Boolean> 選項已經載入 = ExpectedConditions.textToBePresentInElementLocated(怎麼找到選項, value字串);
 		new WebDriverWait(driver, 50).until(選項已經載入);
 		Select 下拉 = new Select(driver.findElement(怎麼找到選項));
 		下拉.selectByValue(value字串);
