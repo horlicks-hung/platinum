@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="3.0"
+ xmlns="http://java.sun.com/xml/ns/javaee"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee     http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+ <display-name>Struts 2</display-name>
+ <context-param>
+  <description>Spring 設定檔位置</description>
+  <param-name>contextConfigLocation</param-name>
+  <param-value>/WEB-INF/spring/applicationContext*.xml</param-value>
+ </context-param>
+ <filter>
+  <filter-name>struts2</filter-name>
+  <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+ </filter>
+ <filter>
+  <description>讓 Hibernate entity 丟到 jsp 上的時候，仍然可以顯示設定為 lazy loading 的集合屬性</description>
+  <filter-name>OpenSessionInViewFilter</filter-name>
+  <filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
+ </filter>
+ <filter-mapping>
+  <filter-name>struts2</filter-name>
+  <url-pattern>/*</url-pattern>
+ </filter-mapping>
+ <filter-mapping>
+  <filter-name>OpenSessionInViewFilter</filter-name>
+  <url-pattern>/*</url-pattern>
+ </filter-mapping>
+ <listener>
+  <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+ </listener>
+</web-app>

@@ -9,3 +9,5 @@
 .project
 .settings
 /PlatinumWeb/target
+/PlatinumFrameworksWeb/target
+/PlatinumTestWithMaven/target

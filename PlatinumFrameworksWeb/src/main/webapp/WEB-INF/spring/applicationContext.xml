@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context.xsd
+	">
+	
+	<context:annotation-config />
+<!-- 	<context:component-scan base-package="com.zurich.sds.service.sample" /> -->
+	
+	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
+	
+	<aop:config>
+		<aop:pointcut id="serviceOperation" expression="execution(* com.platinumwill.service..*.*(..))" />
+		<aop:pointcut id="daoOperation" expression="execution(* com.platinumwill.dao..*.*(..))" />
+		<aop:advisor advice-ref="hibernateTxAdvice" pointcut-ref="serviceOperation" />
+		<aop:advisor advice-ref="hibernateTxAdvice" pointcut-ref="daoOperation" />
+	</aop:config>
+	<tx:advice id="hibernateTxAdvice" transaction-manager="hibernateTransactionManager">
+		<tx:attributes>
+			<tx:method name="*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+	<bean id="hibernateTransactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>
+				<prop key="hibernate.hbm2ddl.auto">validate</prop>
+<!-- 				<prop key="hibernate.hbm2ddl.auto">create</prop> -->
+<!-- 				<prop key="hibernate.show_sql">true</prop> -->
+			</props>
+		</property>
+		<property name="packagesToScan">
+			<list>
+				<value>com.platinumwill.entity.jpa</value>
+			</list>
+		</property>
+<!-- 		<property name="annotatedClasses"> -->
+<!-- 			<list> -->
+<!-- 				<value>com.platinumwill.entity.jpa.TreeItem</value> -->
+<!-- 			</list> -->
+<!-- 		</property> -->
+	</bean>
+	
+<!-- 	<aop:config> -->
+<!-- 		<aop:pointcut id="datasourceQuery" expression="execution(* com.zurich.sds.dao..*.*(..))" /> -->
+<!-- 		<aop:advisor advice-ref="datasourceTxAdvice" pointcut-ref="datasourceQuery" /> -->
+<!-- 	</aop:config> -->
+<!-- 	<tx:advice id="datasourceTxAdvice" transaction-manager="dataSourceTransactionManager"> -->
+<!-- 		<tx:attributes> -->
+<!-- 			<tx:method name="*" /> -->
+<!-- 		</tx:attributes> -->
+<!-- 	</tx:advice> -->
+	<bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	  <property name="dataSource" ref="dataSource"/>
+	</bean>
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+	  <property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="net.sourceforge.jtds.jdbc.Driver" />
+		<property name="url" value="jdbc:jtds:sqlserver://chaogun-dev.ckqpdk8pkcpu.us-west-2.rds.amazonaws.com:1433/POC" />
+		<property name="username" value="chaogun_dev" />
+		<property name="password" value="1qazxcde4" />
+	</bean>
+<!-- 	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean"> -->
+<!-- 		<property name="jndiName" value="java:comp/env/jdbc/zweb"/> -->
+<!-- 	</bean> -->
+	
+</beans>
